@@ -4,11 +4,16 @@ defined('ROOT_PATH') or die("must define ROOT_PATH please.");
 defined('DATA_PATH') or define('DATA_PATH', ROOT_PATH.'WEB-INF/');
 defined('LOG_PATH')  or define('LOG_PATH',  DATA_PATH.'Logs/');
 
-include_once 'functions.php';
+include_once 'Log.class.php';
+include_once 'Log/Driver/File.class.php';
+
 include_once 'Model.class.php';
 include_once 'Db.class.php';
 include_once 'Db/Driver.class.php';
 include_once 'Db/Driver/Mysql.class.php';
+
+include_once 'functions.php';
+
 
 C(array(
         /* Cookie设置 */
