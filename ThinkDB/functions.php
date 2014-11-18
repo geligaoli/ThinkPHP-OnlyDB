@@ -66,7 +66,7 @@ function load_config($file,$parse=CONF_PARSE){
             return parse_ini_file($file);
         case 'yaml':
             return yaml_parse_file($file);
-        case 'xml': 
+        case 'xml':
             return (array)simplexml_load_file($file);
         case 'json':
             return json_decode(file_get_contents($file), true);
@@ -138,11 +138,11 @@ function I($name,$default='',$filter=null,$datas=null) {
                     $input  =  $_GET;
             }
             break;
-        case 'path'    :   
+        case 'path'    :
             $input  =   array();
             if(!empty($_SERVER['PATH_INFO'])){
                 $depr   =   C('URL_PATHINFO_DEPR');
-                $input  =   explode($depr,trim($_SERVER['PATH_INFO'],$depr));            
+                $input  =   explode($depr,trim($_SERVER['PATH_INFO'],$depr));
             }
             break;
         case 'request' :   $input =& $_REQUEST;   break;
@@ -176,7 +176,7 @@ function I($name,$default='',$filter=null,$datas=null) {
             }elseif(is_int($filters)){
                 $filters    =   array($filters);
             }
-            
+
             foreach($filters as $filter){
                 if(function_exists($filter)) {
                     $data   =   is_array($data)?array_map_recursive($filter,$data):$filter($data); // 参数过滤
@@ -479,37 +479,37 @@ function redirect($url, $time=0, $msg='') {
  * @param string $path 缓存路径
  * @return mixed
  */
-function F($name, $value='', $path=DATACACHE_PATH) {
-	static $_cache  =   array();
-	$filename       =   $path . $name . '.php';
-	if ('' !== $value) {
-		if (is_null($value)) {
-			// 删除缓存
-			if(false !== strpos($name,'*')){
-				return false; // TODO
-			}else{
-				unset($_cache[$name]);
-				return is_file($filename) ? unlink($filename) : false;
-			}
-		} else {
-			is_dir(dirname($filename)) or mkdir(dirname($filename), 0755, true);
-			if(false === file_put_contents($filename, serialize($value)))
-				E(('_STORAGE_WRITE_ERROR_').':'.$filename);
-			// 缓存数据
-			$_cache[$name]  =   $value;
-			return null;
-		}
-	}
-	// 获取缓存数据
-	if (isset($_cache[$name]))
-		return $_cache[$name];
-	if (is_file($filename)){
-		$value      =   unserialize(file_get_contents($filename));
-		$_cache[$name]  =   $value;
-	} else {
-		$value          =   false;
-	}
-	return $value;
+function F($name, $value='', $path=DATA_PATH) {
+    static $_cache  =   array();
+    $filename       =   $path . $name . '.php';
+    if ('' !== $value) {
+        if (is_null($value)) {
+            // 删除缓存
+            if(false !== strpos($name,'*')){
+                return false; // TODO
+            }else{
+                unset($_cache[$name]);
+                return is_file($filename) ? unlink($filename) : false;
+            }
+        } else {
+            is_dir(dirname($filename)) or mkdir(dirname($filename), 0755, true);
+            if(false === file_put_contents($filename, serialize($value)))
+                E(('_STORAGE_WRITE_ERROR_').':'.$filename);
+            // 缓存数据
+            $_cache[$name]  =   $value;
+            return null;
+        }
+    }
+    // 获取缓存数据
+    if (isset($_cache[$name]))
+        return $_cache[$name];
+    if (is_file($filename)){
+        $value      =   unserialize(file_get_contents($filename));
+        $_cache[$name]  =   $value;
+    } else {
+        $value          =   false;
+    }
+    return $value;
 }
 
 /**
@@ -608,16 +608,16 @@ function session($name='',$value='') {
             $class  =   strpos($type,'\\')? $type : 'Think\\Session\\Driver\\'. ucwords(strtolower($type));
             $hander =   new $class();
             session_set_save_handler(
-                array(&$hander,"open"), 
-                array(&$hander,"close"), 
-                array(&$hander,"read"), 
-                array(&$hander,"write"), 
-                array(&$hander,"destroy"), 
-                array(&$hander,"gc")); 
+                array(&$hander,"open"),
+                array(&$hander,"close"),
+                array(&$hander,"read"),
+                array(&$hander,"write"),
+                array(&$hander,"destroy"),
+                array(&$hander,"gc"));
         }
         // 启动session
         if(C('SESSION_AUTO_START'))  session_start();
-    }elseif('' === $value){ 
+    }elseif('' === $value){
         if(''===$name){
             // 获取全部的session
             return $prefix ? $_SESSION[$prefix] : $_SESSION;
@@ -650,17 +650,17 @@ function session($name='',$value='') {
         }elseif($prefix){ // 获取session
             if(strpos($name,'.')){
                 list($name1,$name2) =   explode('.',$name);
-                return isset($_SESSION[$prefix][$name1][$name2])?$_SESSION[$prefix][$name1][$name2]:null;  
+                return isset($_SESSION[$prefix][$name1][$name2])?$_SESSION[$prefix][$name1][$name2]:null;
             }else{
-                return isset($_SESSION[$prefix][$name])?$_SESSION[$prefix][$name]:null;                
-            }            
+                return isset($_SESSION[$prefix][$name])?$_SESSION[$prefix][$name]:null;
+            }
         }else{
             if(strpos($name,'.')){
                 list($name1,$name2) =   explode('.',$name);
-                return isset($_SESSION[$name1][$name2])?$_SESSION[$name1][$name2]:null;  
+                return isset($_SESSION[$name1][$name2])?$_SESSION[$name1][$name2]:null;
             }else{
                 return isset($_SESSION[$name])?$_SESSION[$name]:null;
-            }            
+            }
         }
     }elseif(is_null($value)){ // 删除session
         if(strpos($name,'.')){
@@ -796,7 +796,7 @@ function load_ext_file($path) {
 /**
  * 获取客户端IP地址
  * @param integer $type 返回类型 0 返回IP地址 1 返回IPV4地址数字
- * @param boolean $adv 是否进行高级模式获取（有可能被伪装） 
+ * @param boolean $adv 是否进行高级模式获取（有可能被伪装）
  * @return mixed
  */
 function get_client_ip($type = 0,$adv=false) {

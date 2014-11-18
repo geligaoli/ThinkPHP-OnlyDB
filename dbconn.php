@@ -1,7 +1,6 @@
 <?php
 
 defined('ROOT_PATH') or define('ROOT_PATH', __DIR__.'/');
-defined('DATACACHE_PATH') or define('DATACACHE_PATH', ROOT_PATH.'_Data/');
 
 include_once 'ThinkDB/ThinkDB.php';
 

@@ -1,5 +1,9 @@
 <?php
 
+defined('ROOT_PATH') or die("must define ROOT_PATH please.");
+defined('DATA_PATH') or define('DATA_PATH', ROOT_PATH.'WEB-INF/');
+defined('LOG_PATH')  or define('LOG_PATH',  DATA_PATH.'Logs/');
+
 include_once 'functions.php';
 include_once 'Model.class.php';
 include_once 'Db.class.php';
@@ -35,6 +39,13 @@ C(array(
         'DB_SQL_BUILD_LENGTH'   =>  20,     // SQL缓存的队列长度
         'DB_SQL_LOG'            =>  false,  // SQL执行日志记录
         'DB_BIND_PARAM'         =>  false,  // 数据库写入数据自动参数绑定
+
+        /* 日志设置 */
+        'LOG_RECORD'            =>  false,   // 默认不记录日志
+        'LOG_TYPE'              =>  'File', // 日志记录类型 默认为文件方式
+        'LOG_LEVEL'             =>  'EMERG,ALERT,CRIT,ERR',// 允许记录的日志级别
+        'LOG_FILE_SIZE'         =>  2097152,    // 日志文件大小限制
+        'LOG_EXCEPTION_RECORD'  =>  false,    // 是否记录异常信息日志
 
         /* SESSION设置 */
         'SESSION_AUTO_START'    =>  true,    // 是否自动开启Session
