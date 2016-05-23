@@ -34,7 +34,7 @@ class Db {
             // 兼容mysqli
             if('mysqli' == $options['type']) $options['type']   =   'mysql';
             // 如果采用lite方式 仅支持原生SQL 包括query和execute方法
-            $class  =   $options['lite']?  'Think\Db\Lite' :   'Think\\Db\\Driver\\'.ucwords($options['type']);
+            $class  =   !empty($options['lite'])?  'Think\Db\Lite' :   'Think\\Db\\Driver\\'.ucwords(strtolower($options['type']));
             if(class_exists($class)){
                 self::$instance[$md5]   =   new $class($options);
             }else{
@@ -73,7 +73,7 @@ class Db {
                 'rw_separate'   =>  isset($config['db_rw_separate'])?$config['db_rw_separate']:false,
                 'master_num'    =>  isset($config['db_master_num'])?$config['db_master_num']:1,
                 'slave_no'      =>  isset($config['db_slave_no'])?$config['db_slave_no']:'',
-                'debug'         =>  isset($config['db_debug'])?$config['db_debug']:APP_DEBUG,
+                'debug'         =>  isset($config['db_debug'])?$config['db_debug']:false,
                 'lite'          =>  isset($config['db_lite'])?$config['db_lite']:false,
             );
         }else {
@@ -91,7 +91,7 @@ class Db {
                 'rw_separate'   =>  C('DB_RW_SEPARATE'),
                 'master_num'    =>  C('DB_MASTER_NUM'),
                 'slave_no'      =>  C('DB_SLAVE_NO'),
-                'debug'         =>  C('DB_DEBUG'),
+                'debug'         =>  C('DB_DEBUG',null,false),
                 'lite'          =>  C('DB_LITE'),
             );
         }
