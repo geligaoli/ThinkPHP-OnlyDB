@@ -2,6 +2,8 @@
 
 分离出来的ThinkPHP的数据库ORM模型，可以由普通php文件调用
 
+技术发展的很快，这个还是Tp3.2版本的，建议学习Think5.x吧
+
 ## 介绍
 
 ThinkPHP是一个非常不错的开源项目。地址见 https://github.com/liu21st/thinkphp
